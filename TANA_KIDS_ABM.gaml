@@ -69,7 +69,7 @@ global {
 	file shape_plains <- file ("north_polder/plains_shp/one_plains_constance_Dissolve.shp");//plains
 	// can chose either north polder or east polder plots, make sure same as other geographical elements (not all are polder specific)
 	file shape_plots <- file("plots_shp_north_polder/plots.shp"); // farming plots, can also create them using code below (for example with changed area defined above)
-	file dem_file <- file("dem/raster_elev.asc");
+	//file dem_file <- file("dem/raster_elev.asc");
 	
 	// DATA FOR EAST POLDER IN 2017, COMMENT OUT WITH /* X */ IF OTHER STARTING DATA NECESSARY
 	
@@ -338,7 +338,7 @@ global {
 		share_brick <- plots count (each.land_use = 5);
 		
 		share_hungry <- length(households where(each.income/each.hh_size < min_income))/length(households);
-		save [cycle, simulation, max_soil_depth, base_price, likelihood_of_new_ind, price_param, mg_water_height, mg_necessary_ressources, brick_price_param, market_income, rice_income, avg_nb_plots, min_income, rate_pop_increase, tot_income, tot_income_with_land, share_hungry,plots count (each.land_use = 1), plots count (each.land_use = 2), plots count (each.land_use = 3),plots count (each.land_use = 4), plots count (each.land_use = 5), plots count (each.land_use = 6)] to: "../output/output_param/" + simulation+ ".csv" format: "csv";
+		save [cycle, simulation, max_soil_depth, base_price, likelihood_of_new_ind, price_param, mg_water_height, mg_necessary_ressources, brick_price_param, market_income, rice_income, avg_nb_plots, min_income, rate_pop_increase, tot_income, tot_income_with_land, share_hungry,plots count (each.land_use = 1), plots count (each.land_use = 2), plots count (each.land_use = 3),plots count (each.land_use = 4), plots count (each.land_use = 5), plots count (each.land_use = 6)] to: "output/output_param/" + simulation+ ".csv" format: "csv";
 		//save plots attributes: ["land_use", "soil_height"] to: ("../output/output_shp/plots_" + simulation + ".shp") crs: "EPSG:4326" format: "shp"; // can save plots to do flood model analysis
 	}
 	// make sure simulation stops at some point
@@ -696,8 +696,8 @@ species plots schedules: []{
 }
 
 // define elevation grid, necessary for flood model
-grid elevation file: dem_file {
-}
+//grid elevation file: dem_file {
+//}
 
 // define grid "cells" as part of a plot, initially done like this in case fragmentation of plots should be added to model
 grid cells cell_width: 5 cell_height: 5 {
@@ -705,12 +705,12 @@ grid cells cell_width: 5 cell_height: 5 {
 	rgb col;
 	rgb soil_col;
 	float water_depth;
-	list<elevation> elevation_grid_cells;
+	//list<elevation> elevation_grid_cells;
 	
 	//only necessary for flood model, defines cell height for exported dem
 	init {
-		elevation_grid_cells <- elevation where (self.shape covers each.location);
-		grid_value <- elevation_grid_cells mean_of each.grid_value;
+		//elevation_grid_cells <- elevation where (self.shape covers each.location);
+		//grid_value <- elevation_grid_cells mean_of each.grid_value;
 	}
 	
 	reflex update_grid {
